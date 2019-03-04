@@ -35,10 +35,7 @@ OPENSSL_MAKE := $(MAKE) -f $(SRC_ROOT)/closed/openssl.gmk SPEC=$(SPEC)
 openssl-build :
 	+$(OPENSSL_MAKE)
 
-$(OUTPUTDIR)/vm/include/jvmti.h : $(TOPDIR)/openj9/runtime/include/jvmti.h.m4
-  m4 -D JAVA_SPEC_VERSION=8 $< > $@
-
-j9vm-build : $(OUTPUTDIR)/vm/include/jvmti.h openssl-build
+j9vm-build : openssl-build
 	+$(OPENJ9_MAKE) OPENJDK_VERSION_NUMBER_FOUR_POSITIONS=$(VERSION_NUMBER_FOUR_POSITIONS) build-j9
 
 j9vm-compose-buildjvm : j9vm-build
